@@ -1,4 +1,4 @@
-class ViewBase<T> {
+abstract class ViewBase<T> {
     
     private _elemento: Element;
 
@@ -14,7 +14,5 @@ class ViewBase<T> {
         this._elemento.innerHTML = '';
     }
 
-    template(modelo: T): string {
-        throw new Error("o método template não foi implementado")
-    }
+    abstract template(modelo: T): string;
 }
