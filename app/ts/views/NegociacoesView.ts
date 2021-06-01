@@ -1,4 +1,7 @@
-class NegociacoesView extends ViewBase<Negociacoes> {
+import { ViewBase } from './ViewBase'
+import { Negociacoes } from '../models/Negociacoes';
+
+export class NegociacoesView extends ViewBase<Negociacoes> {
 
     template(modelo: Negociacoes) : string {
         return `

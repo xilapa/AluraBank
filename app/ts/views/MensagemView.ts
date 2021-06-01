@@ -1,4 +1,6 @@
-class MensagemView extends ViewBase<string> {
+import { ViewBase } from './ViewBase'
+
+export class MensagemView extends ViewBase<string> {
 
 
     template(modelo: string): string {

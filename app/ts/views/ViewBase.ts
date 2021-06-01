@@ -1,4 +1,4 @@
-abstract class ViewBase<T> {
+export abstract class ViewBase<T> {
     
     private _elemento: Element;
 
