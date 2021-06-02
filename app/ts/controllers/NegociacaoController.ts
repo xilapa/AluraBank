@@ -1,19 +1,23 @@
+import { injectDOM } from '../helpers/decorators/index';
 import { Negociacoes, Negociacao } from '../models/index'
 import { NegociacoesView, MensagemView } from '../views/index'
 
 export class NegociacaoController {
 
+    @injectDOM('#data')
     private _elementoInputData: HTMLInputElement;
+
+    @injectDOM('#quantidade')
     private _elementoInputQuantidade: HTMLInputElement;
+
+    @injectDOM('#valor')
     private _elementoInputValor: HTMLInputElement;
     private _negociacoes: Negociacoes = new Negociacoes();
     private _negociacoesView: NegociacoesView = new NegociacoesView('#negociacoesView');
     private _mensagemView: MensagemView = new MensagemView('#mensagemView');
 
     constructor() {
-        this._elementoInputData = document.querySelector('#data');
-        this._elementoInputQuantidade = document.querySelector('#quantidade');
-        this._elementoInputValor = document.querySelector('#valor');
+
         this._negociacoesView.update(this._negociacoes);
     }
 
