@@ -1,8 +1,11 @@
 import { ViewBase } from './ViewBase'
 import { Negociacoes } from '../models/Negociacoes';
+import { logaTempoDeExecucao } from '../helpers/decorators/index';
+
 
 export class NegociacoesView extends ViewBase<Negociacoes> {
 
+    @logaTempoDeExecucao()
     template(modelo: Negociacoes) : string {
         return `
         <table class="table table-hover table-bordered">
