@@ -1,5 +1,6 @@
 import { debounce, injectDOM } from '../helpers/decorators/index';
 import { Negociacoes, Negociacao, INegociacaoParcial } from '../models/index'
+import { NegociacaoService } from '../service/index';
 import { NegociacoesView, MensagemView } from '../views/index'
 
 export class NegociacaoController {
@@ -15,6 +16,7 @@ export class NegociacaoController {
     private _negociacoes: Negociacoes = new Negociacoes();
     private _negociacoesView: NegociacoesView = new NegociacoesView('#negociacoesView');
     private _mensagemView: MensagemView = new MensagemView('#mensagemView');
+    private _negociacoesService: NegociacaoService = new NegociacaoService();
 
     constructor() {
 
@@ -39,24 +41,18 @@ export class NegociacaoController {
     @debounce()
     importa() {
 
-        function isOkay(res : Response) {
+        function isOkay(res: Response) {
             if (res.ok)
                 return res
             else
                 throw new Error(res.statusText)
         }
 
-        fetch('http://localhost:8080/dados')
-            .then(res => isOkay(res))
-            .then(res => res.json())
-            .then((dados : INegociacaoParcial[]) => {
-                dados
-                    .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao))
-                
-                this._negociacoesView.update(this._negociacoes);
-
+        this._negociacoesService.getNegociacoes(isOkay)
+            .then(negociacaoArray => {
+                negociacaoArray.forEach(negociacao => this._negociacoes.adiciona(negociacao))
+                this._negociacoesView.update(this._negociacoes)
             })
-            .catch( (err : Error) => console.log(err.message))
+                
     }
 }
