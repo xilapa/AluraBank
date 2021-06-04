@@ -61,6 +61,10 @@ export class NegociacaoController {
             
             this._negociacoesView.update(this._negociacoes)
         })
+            .catch((err: Error) => {
+                this._mensagemView.update(err.message);
+                setTimeout(()=> this._mensagemView.clear(),5000)
+        })
                 
     }
 }

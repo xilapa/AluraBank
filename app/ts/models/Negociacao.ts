@@ -1,7 +1,6 @@
-import { IComparavel } from './IComparavel';
-import { IImprimivel } from './IImprimivel';
+import { IMeuObjeto } from './IMeuObjeto';
 
-export class Negociacao implements IImprimivel, IComparavel<Negociacao>{
+export class Negociacao implements IMeuObjeto<Negociacao>{
 
     constructor(readonly data: Date, readonly quantidade: number, readonly valor: number) { }
     
