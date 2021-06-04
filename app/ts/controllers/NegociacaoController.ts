@@ -52,11 +52,15 @@ export class NegociacaoController {
                 throw new Error(res.statusText)
         }
 
-        this._negociacoesService.getNegociacoes(isOkay)
-            .then(negociacaoArray => {
-                negociacaoArray.forEach(negociacao => this._negociacoes.adiciona(negociacao))
-                this._negociacoesView.update(this._negociacoes)
-            })
+    this._negociacoesService.getNegociacoes(isOkay)
+        .then(negociacaoArrayParaImportar => {
+            negociacaoArrayParaImportar
+                .filter(novaNegociacao =>
+                    !this._negociacoes.paraArray().some(negociacaoJaAdicionada => negociacaoJaAdicionada.ehIgual(novaNegociacao)))
+                .forEach(negociacao => this._negociacoes.adiciona(negociacao))
+            
+            this._negociacoesView.update(this._negociacoes)
+        })
                 
     }
 }
