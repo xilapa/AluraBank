@@ -28,7 +28,7 @@ export class NegociacaoController {
     adiciona(event: Event) {
         event.preventDefault();
         const negociacao = new Negociacao(
-            new Date(this._elementoInputData.value.replace(/-/g,',')),
+            new Date(this._elementoInputData.value.replace(/-/g, ',')),
             parseInt(this._elementoInputQuantidade.value),
             parseFloat(this._elementoInputValor.value)
         );
@@ -39,11 +39,11 @@ export class NegociacaoController {
 
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.update("Negociação adicionada com sucesso!");
-        setTimeout(()=> this._mensagemView.clear(),5000)
+        setTimeout(() => this._mensagemView.clear(), 5000)
     }
 
     @debounce()
-    importa() {
+    async importa() {
 
         function isOkay(res: Response) {
             if (res.ok)
@@ -52,19 +52,19 @@ export class NegociacaoController {
                 throw new Error(res.statusText)
         }
 
-    this._negociacoesService.getNegociacoes(isOkay)
-        .then(negociacaoArrayParaImportar => {
-            negociacaoArrayParaImportar
-                .filter(novaNegociacao =>
-                    !this._negociacoes.paraArray().some(negociacaoJaAdicionada => negociacaoJaAdicionada.ehIgual(novaNegociacao)))
-                .forEach(negociacao => this._negociacoes.adiciona(negociacao))
-            
+        try {
+            const negociacoesParaImportar = await this._negociacoesService.getNegociacoes(isOkay)
+
+            negociacoesParaImportar.filter(novaNegociacao =>
+                !this._negociacoes.paraArray().some(negociacaoJaAdicionada => negociacaoJaAdicionada.ehIgual(novaNegociacao)))
+                .forEach(negociacaoFiltrada => this._negociacoes.adiciona(negociacaoFiltrada));
+
             this._negociacoesView.update(this._negociacoes)
-        })
-            .catch((err: Error) => {
-                this._mensagemView.update(err.message);
-                setTimeout(()=> this._mensagemView.clear(),5000)
-        })
-                
+        }
+        catch (err) {
+            this._mensagemView.update(err.message);
+            setTimeout(() => this._mensagemView.clear(), 5000)
+        }
+
     }
 }
