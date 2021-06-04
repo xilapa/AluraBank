@@ -64,6 +64,12 @@ System.register(["../helpers/decorators/index", "../models/index", "../views/ind
             __decorate([
                 index_1.injectDOM('#valor')
             ], NegociacaoController.prototype, "_elementoInputValor", void 0);
+            __decorate([
+                index_1.debounce()
+            ], NegociacaoController.prototype, "adiciona", null);
+            __decorate([
+                index_1.debounce()
+            ], NegociacaoController.prototype, "importa", null);
             exports_1("NegociacaoController", NegociacaoController);
         }
     };

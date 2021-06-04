@@ -1,3 +1,4 @@
+// decorator de propriedade
 export function injectDOM(seletor: string) {
     
     return function name(target: any, propertyKey: string) {
@@ -15,7 +16,6 @@ export function injectDOM(seletor: string) {
         }
 
         Object.defineProperty(target, propertyKey, { get: getter})
-
 
     }
     

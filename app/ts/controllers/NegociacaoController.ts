@@ -1,4 +1,4 @@
-import { injectDOM } from '../helpers/decorators/index';
+import { debounce, injectDOM } from '../helpers/decorators/index';
 import { Negociacoes, Negociacao, INegociacaoParcial } from '../models/index'
 import { NegociacoesView, MensagemView } from '../views/index'
 
@@ -21,6 +21,7 @@ export class NegociacaoController {
         this._negociacoesView.update(this._negociacoes);
     }
 
+    @debounce()
     adiciona(event: Event) {
         event.preventDefault();
         const negociacao = new Negociacao(
@@ -35,6 +36,7 @@ export class NegociacaoController {
         setTimeout(()=> this._mensagemView.clear(),5000)
     }
 
+    @debounce()
     importa() {
 
         function isOkay(res : Response) {
