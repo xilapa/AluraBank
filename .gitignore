@@ -143,4 +143,4 @@ temp/
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node
 
-/js-build
+js-build/
